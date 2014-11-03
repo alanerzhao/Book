@@ -2,13 +2,13 @@
 
 #### Vim 配置自定义比较工具
 
-    ` git config --global diff.tool vimdiff`
-    ` git config --global difftool.prompt false`
-    ` git config --global alias.d difftool` 使用时`git d file1`
+     git config --global diff.tool vimdiff
+     git config --global difftool.prompt false
+     git config --global alias.d difftool` 使用时`git d file1
 
 #### Vim 比较命令
-    `vimdiff mvimdiff gvimdiff`
-    `:vertical diffsplit FILE_RIGHT`
+    vimdiff mvimdiff gvimdiff
+    :vertical diffsplit FILE_RIGHT
 
 #### Vimdiff charset
 
