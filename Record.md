@@ -37,3 +37,56 @@
     :bn 和 :bp → 你可以同时打开很多文件，使用这两个命令来切换下一个或上一个文件。（陈皓注：我喜欢使用:n到下一个文件）
     ctrl + V  = → 自动给缩进 （陈皓注：这个功能相当强大，我太喜欢了）
 
+#### vim正则匹配
+
+    :%s/str1/str2/        用字符串 str2 替换行中首次出现的字符串 str1
+    :s/str1/str2/g        用字符串 str2 替换行中所有出现的字符串 str1
+    :.,$ s/str1/str2/g    用字符串 str2 替换正文当前行到末尾所有出现的字符串 str1
+    :1,$ s/str1/str2/g    用字符串 str2 替换正文中所有出现的字符串 str1
+    :g/str1/s//str2/g     功能同上
+    :m,ns/str1/str2/g     将从m行到n行的str1替换成str2
+
+ * 将空格转化为制表符的命令则恰好相反：
+
+    :set noexpandtab
+    :%retab!
+
+ * 制表符转空格
+
+    :set expandtab
+    :%retab
+    排版注释
+    gq]/
+
+
+#### shell 命令
+
+    文件内容查找
+        grep content files 
+
+    chrome 更改css类型可以按住shift键点击颜色
+
+    ssh 登录到服务器
+    ssh zhaoshuai@192.168.1.99
+
+    更改权限
+
+    chmod -R 777 /
+    chown -R www:www
+    切换到root
+    sudo su - 
+    
+    解压zip
+    unzip js\ css3.zip -d aa
+    压缩
+    zip  压缩文件名 源文件名
+    cd -          #回到上次所在目录，这个技巧我原来还真是不知道，感觉还是比较有用，省略了很多输入。
+    cd            #回到主目录
+    cd ~          #同样也是回到主目录
+
+    wget -r -p -np -k http://xxx.com/xxx
+    -r,  --recursive（递归）          specify recursive download.（指定递归下载）
+
+    -k,  --convert-links（转换链接）      make links in downloaded HTML point to local files.（将下载的HTML页面中的链接转换为相对链接即本地链接）
+    -p,  --page-requisites（页面必需元素）    get all images, etc. needed to display HTML page.（下载所有的图片等页面显示所需的内容）
+    -np, --no-parent（不追溯至父级）          don't ascend to the parent directory.

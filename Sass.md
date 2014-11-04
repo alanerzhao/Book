@@ -69,12 +69,26 @@ sass、Compass 安装使用
     @import module2
 
     2.监听sass文件，发布sourcemap到指定的目录
+
     //单文件监听
         sass --watch --compass --sourcemap src/sass/file.sass:file.css
 
     //多文件监听
         sass --watch --compass --sourcemap src/sass:build/css
 
+    //将css 转成scss
+        sass-convert style.css style.scss
+
+    //解析后的格试设置 `--style` 四种取值分别为：nested，'expanded'，compact，compressed
+        sass --watch style.scss:style.css --style compact
+        sass --watch style.scss:style.css --sourcemap
+        sass --watch style.scss:style.css --style expanded --sourcemap
+        sass --watch style.scss:style.css --debug-info
+
     3.sass和scss互相转换
       sass-convert style.sass style.scss
       sass0cibvert style.scss style.sass
+
+    4.使用compass validate检查你的css
+       如果没有安装会提示你安装
+

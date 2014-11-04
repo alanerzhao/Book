@@ -7,3 +7,8 @@
  - 已提交 `committed` 已经保存到本地数据库了
  - 已修改 `modified`  修改了某些文件但没有提交
  - 已暂存 `staged`    已修改的文件放在下次提交时保存
+
+ git 恢复
+    git reset --hard version
+ 查看记录命令高级还原
+    git reflog
