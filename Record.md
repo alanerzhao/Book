@@ -47,15 +47,13 @@
     :m,ns/str1/str2/g     将从m行到n行的str1替换成str2
 
  * 将空格转化为制表符的命令则恰好相反：
-
     :set noexpandtab
     :%retab!
 
  * 制表符转空格
-
     :set expandtab
     :%retab
-    排版注释
+ * 排版注释
     gq]/
 
 
@@ -63,8 +61,6 @@
 
     文件内容查找
         grep content files 
-
-    chrome 更改css类型可以按住shift键点击颜色
 
     ssh 登录到服务器
     ssh zhaoshuai@192.168.1.99
@@ -92,17 +88,17 @@
     -np, --no-parent（不追溯至父级）          don't ascend to the parent directory.
 
 #### chrome 
-  * @http://devtoolstips.com/
-
-    在source模式下command +d 可以替换下一个
-    在elemet面板的css面板的最下方有查找css属性的搜索
-    在element下搜索html 可以用> 查找子元素
-    command + click 多列操作
-    可以托动代码到编辑器
-    alt多列操作
-    command + click 定位css文件位置
-    shift + css 面板颜色的图片可以更改rgba hsl等
-    command + css 颜色前的面板可以获得页面的颜色
-    alt + click 节点展开多级
+   * @http://devtoolstips.com/
+   * chrome 更改css类型可以按住shift键点击颜色
+   * 在source模式下command +d 可以替换下一个
+   * 在elemet面板的css面板的最下方有查找css属性的搜索
+   * 在element下搜索html 可以用> 查找子元素
+   * command + click 多列操作
+   * 可以托动代码到编辑器
+   * alt多列操作
+   * command + click 定位css文件位置
+   * shift + css 面板颜色的图片可以更改rgba hsl等
+   * command + css 颜色前的面板可以获得页面的颜色
+   * alt + click 节点展开多级
 
 
