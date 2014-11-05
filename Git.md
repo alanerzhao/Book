@@ -12,3 +12,15 @@
     git reset --hard version
  查看记录命令高级还原
     git reflog
+ 查看谁动了你的代码
+    git blam file name
+ 提交部分更改
+    git add -p
+ 暂停
+    git stash
+    git stash apply
+ 检查丢失提交
+ git fsck --lost-found
+
+ cherry-pick从另一个分支里选出单独的一个提交，然后合并到当前分支。如果你正并行工作在两个或者更多的分支上，你也许会发现一个存在于所有分支上的bug。如果你解决了一个分支上的这个bug，你可以拣选这个对应的提交应用到其他分支上，而不会弄乱其他文件或者提交
+    git cherry-pick [commit_hash]]
