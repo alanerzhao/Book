@@ -84,6 +84,8 @@ sass、Compass 安装使用
         sass --watch style.scss:style.css --sourcemap
         sass --watch style.scss:style.css --style expanded --sourcemap
         sass --watch style.scss:style.css --debug-info
+    // 工作中使用的`command`
+        sass --watch --sourcemap --style expanded --compass sass:css
 
     3.sass和scss互相转换
       sass-convert style.sass style.scss
