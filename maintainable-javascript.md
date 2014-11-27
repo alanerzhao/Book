@@ -40,4 +40,47 @@ UI层的松耦合
  * 单全局变量也就是单体，用一个大对象来管理属性和方法，有点类似于命名空间
  * 零全局变量- 小的功能块，不需要提供任何接口，也不依赖任何模块
 
+事件处理
+-----------------
+ * 隔离应用逻辑（也就是业务逻辑，是和业务相关的代码）
+ ```javascript 
+    var app = {
+        //事件处理函数
+        handleClick : function () {
+            this.showPopup();
+        },
+        //应用逻辑
+        showPopup : function () {
+            var popup = document.getElementById("popup");
+            popup.style.left = event.clientX + 'px';
+        }
+    };
+    addListener(element,'click',function (event) {
+        app.handleClick(event);
+    })
+ ```
+ * 不要分发事件对象，明确传入参数
+ * 当处理事件时，最好让事件处理程序成为接触到event对象的唯一的函数
+  - 应当在进入业务或应用逻辑之前处来处理一些依赖于event的操作
+ ```javascript 
+    var app = {
+        handleClick : function (event) {
+            this.showPopup(event.clinetX, event.clientY);
+            //阻止默认行为
+            event.preventDefault()
+            //阻止事件冒泡
+            event.stopPropagation()
+        },
+        //可以app.showPopup(1,2)来做测试
+        showPopup : function (x, y) {
+            var popup = document.getElementById("popup");
+            popup.style.left = x + 'px';
+        }
+    };
+    //事件处理函数
+    addListener(element,'click',function (event) {
+        app.handleClick(event);
+    })
+ ```
+
  
