@@ -42,7 +42,7 @@ UI层的松耦合
 
 事件处理
 -----------------
- * 隔离应用逻辑，也就是业务逻辑，是和业务相关的代码
+ * 隔离应用逻辑，也就是~~业务逻辑~~说错了，后来想了想应用逻辑是指你写的这个组件的逻辑，不是指的业务逻辑。
  
  ```javascript 
     var app = {
@@ -84,6 +84,43 @@ UI层的松耦合
         app.handleClick(event);
     })
  ```
- * asdasd
+避免"空比较"
+-------------------
+ 5 种数据类型，字符串，数字，布尔值，null 和 undefined
+ 基本类型可以用```typeof``` 来做判断，未定义的变量值为undefined 通过typeof将返回"undefined"
+
+ 检查引用类型最好的方法是使用instanceof 来判断这个值是不是这个构造函数的实例，但所有对象都是```Object```的实例
+ 所以也有局限性
+
+ 检测数组最优雅的方案
+ ```javascript 
+    function isArray(val) {
+        if(typeof Array.isArray === "function") {
+            return Array.isArray(val);
+        } else {
+        return Object.prototype.toString.call(value) === "[object Arrat]";
+        }
+    }
+ ``` 
+ 检测属性（检测一个属性是否在对象上存在时）
+ ``` in ``` 简单的判断对象的属性是否存在
+ ``` hasOwnProperty ```也可以达到同样的目的，检查实例对象的某个属性
+
+将配置数据从代码中分离出来
+---------------------------
+ 配置数据是应用中写死的值，那即然是配置就应当更灵活些。
+ ```javascript
+    var config = {
+            URL:"XX",
+            MESSAGE:"XX"
+        }
+    function validate(value) {
+        if(!value) {
+            alert(config.MESSAGE);
+        }
+    }
+ ``` 
+
 
  
+
