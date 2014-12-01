@@ -119,8 +119,63 @@ UI层的松耦合
             alert(config.MESSAGE);
         }
     }
- ``` 
+ ```
+抛出自定义错误
+----------------
+ ``` throw ``` 抛出错误信息
+ 如果没有通过try-catch 语句捕获，抛出任何值都将引发一个错误。
+ ```javascript
+    function getDivs (element) {
+        if(element && element.getElementsByTagName) {
+        return element.getElementsByTagName("div");
+        } else {
+            throw new Error("getDivs":Argument mus be a DOM element);
+        }
+    }
+ ```
+浏览器嗅探
+------------------
+ 最好不要使用用户代理而是去检测对象属性等方法（特性检测）``` window.getElementById ```
 
+自动化
+-----------------
+### 基本结构
+ **build** 用来放放置最终构建后的文件
+ **src** 用来放置所有的源文件
+ **tests** 用来放置所有的测试文件
 
+ 有时间看看开源的jQuery和BackBone等代码如何构建编译的
+ 
+风格指南
+------------
+** 注释声明
+ ``` javascript
+    
+    //TODO 说明代码还未完成，应当包含下一步要做的事情
+    
+    //HACK 说明代码实现走了一个捷径，应当包含为何使用hack
+    
+    //XXX 说明代码是有问题的并应当尽快修复
+    
+    //FIXME 说明代码是有问题的并应尽快修复
+    
+    //REVIEW 说明代码任何可能的改动都需要评审
+
+    //TODO: 我希望找到一种更好的方式
+    doSomething()
+
+    /*
+     * HACK: 不得不针对IE 6去做除理
+     * 可能再下一版本去掉
+     */
+     if (document.all) {
+        fuck ie    
+     }
+
+     //REVIEW: 有更好的方法吗？
+     if (document.all) {
+         
+     }
+ ```
  
 
