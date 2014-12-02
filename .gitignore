@@ -71,6 +71,8 @@ fis-conf.js
 +.sass-cache/
 **/.sass-cache
 **/.sass-cache/*
+/expample
+*.rdb
 Work.md
 /Work.md
 JavaScript.md
