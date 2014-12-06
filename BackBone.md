@@ -36,7 +36,11 @@ BackBone.js
      //绑定change事件
     var changeEvent = {
         "change:developer": mfChange.changeDeveloper,
-        "change:editor": mfChange.changeEditor
+        "change:editor": mfChange.changeEditor,
+        "trigger_": triggerConsole
+    }
+    function triggerConsole() {
+        
     }
 
     var mfView = new mofangView();
@@ -44,6 +48,14 @@ BackBone.js
     mfView.on("changeEvent")
     mfView.on("change:developer",mfChange.changeDeveloper);
     mfView.on("change:editor",mfChange.changeEditor);
+    mfView.trigger("changeEvent['trigger_']")
 
  ```
  
+ ``` once ``` 绑定一次，只执行一次，之后即使触发也不执行。（使用方法同上）  
+ 只针对于一些初始化
+
+ ``` trigger ``` 触发事件，像change事件是Backbone封装好的对象事件，那么自定义事件  
+ 需要用```trigger ``` 来触发。
+
+
