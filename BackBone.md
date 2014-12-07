@@ -115,6 +115,7 @@ BackBone.js
             Score: 0,
             Structure:"<div></div>"
         },
+        //自定义show方法
         show: functio () {
              //this指向模型对象
         }
@@ -147,9 +148,9 @@ BackBone.js
    读取，修改，验证，删除，等，对数据的处理，书中的例子大体都能懂，和上面的```set get ```  
    大体一样的。  
 
-   **数据验证** 
+   **数据验证**
    * 添加```validate```
-   * 绑定```invalid``` 事件
+   * 绑定```invalid``` 事件  
    * 使用``set```修改属性时，必须将validate设置为true  
    ```javascript
         var Date = Backbone.Model.extend({
@@ -183,7 +184,9 @@ BackBone.js
 
    ```
 ### 更新数据回滚
-   （page 72)没什么可总结的。
+   ```page 72``` 没什么可总结的。  
+   ____
+
 ### 删除数据
    ```unset clear``` 来删除数据，前者删除一个或多个对象，后者删除所有  
 ### 对象属性操作
@@ -221,6 +224,78 @@ BackBone.js
                  console.log(error)
             }
         })
+
+   ```
+###模型集合
+   定义：Collection 是依附于基类的另外一个数据集合类，它的功能是管理和存储由模型衍生的数据集合  
+   相当于一个model的包裹层，相当于数据库的一张数据表，处理表中的每条数据。  
+
+#### 创建集合对象
+   * 自定义集合类，再实例化集合对象
+     集合类是依附于数据模型类，首先声明一个集合（Collection)类，并在集合类中设置model数据类  
+     然后实例化一个当前集合类的对象，就可以添加数据模型
+   * 直接实例化集合对象（简单）
+   ```javascript 
+      //example 1 (自定义集合类)
+
+       //声明数据模型类
+        var student = Backbone.Model.extend({
+            initilize: function () { },
+            defaults: {
+                name:"",
+                age : "",
+                love: ""
+            }
+        })
+
+        //声明模型集合类
+        //通过Collection.extend继承student
+        var stulist = Backbone.Collection.extend({
+            //设置依赖名称数据模型，相当于外面"数据结构"是什么样？嘿嘿懂了！
+            //它将存储在模型集合的model属性中
+            model: student
+        })
+        var stumodels = [{
+            name:"zhaoshuai",
+            age:"26",
+            love:"web developer"
+        },{
+            name:"zhaoyan",
+            age:"36",
+            love:"teacher"
+        }]
+        var stus = new stulist(stumodels);
+        console.log(stus.models)
+        
+        //example2(实例化集合类)
+        
+        var mfPerson = Backbone.Model.extend({
+            defaults: {
+                frontEnd:4,
+                BackEnd :10,
+                Total : 14
+            }
+        })
+
+        var mfs = [{
+            frontend:10,
+            backend:10,
+            total:20
+        },{
+            frontend:20,
+            backend:1,
+            total:21
+        }]
+
+        var stu = new Backbone.Collection(mfs,{
+            model: mfPerson
+        })
+
+#### 自定义集合方法
+  和自定义数据模型方样一样类似的。现在看Collection更像是除里数据模型的集合
+
+
+        
 
    ```
 
