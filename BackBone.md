@@ -147,7 +147,7 @@ BackBone.js
    读取，修改，验证，删除，等，对数据的处理，书中的例子大体都能懂，和上面的```set get ```  
    大体一样的。  
 
-   ** 数据验证 ** 
+   **数据验证** 
    * 添加```validate```
    * 绑定```invalid``` 事件
    * 使用``set```修改属性时，必须将validate设置为true  
@@ -165,6 +165,8 @@ BackBone.js
                 var reg = /\d/;
                 if(!reg.test(attrs.age)) {
                     console.log("必须为数字")
+                    //将执行checkDate得到返回的error
+                    retrun "error"
                 } else {
                     console.trace("ok")
                 }
@@ -176,8 +178,53 @@ BackBone.js
         var onceDate = new Date();
         //必须传入validate参数才可以验证
         onceDate.set("age","fuck",{"validate":true})
+        //将不在触发任何验证
+        onceDate.set("age","fuck",{"silent":true})
 
    ```
+### 更新数据回滚
+   （page 72)没什么可总结的。
+### 删除数据
+   ```unset clear``` 来删除数据，前者删除一个或多个对象，后者删除所有  
+### 对象属性操作
+   在Backbone中每一个实例对象所有属性都保存在一个名为attributes的对象中  
+   对象的```set get ``` 都依赖此对象，可以直接调用attributes获得全部属性值  
+   ```javascript
+      obj.attributes //获得模型对象的所有属性（不会产生任何触发事件）
+      obj.previous(attrName) //获得修改之前的值
+      obj.previousAttributes() //获取修改之前的所有值
+   ```
+### 同步数据到服务器
+   ```save``` 在服务器中保存客户端发送的数据，设置```wait```属性可以调用validate  
+   当数据请求不成功时，将回滚数据，很实用。如果不设置无论失败成功都将更新为最新的数据  
+
+   ```fetch``` 从服务器获取数据，用于数据恢复或数据模型初始化。用法和save基本一样  
+   ```destroy``` 将以``DELETE```的请求方式，向服务器发送对象id  必须要设置```idAttribute```
+
+   ```javascript
+     var student = Backbone.Model.extend({
+            initilize: function () { },
+            url: 'server/save.php',
+            defaults: {
+                name:"baozi",
+                age : 26,
+                love: "web developer"
+            }
+        })
+        var stu = new student;
+        stu.save(null,{
+            //拿到服务器返回的值
+            success:function(model,response){
+            console.log(response.code)
+            },
+            error: function (error) {
+                 console.log(error)
+            }
+        })
+
+   ```
+
+
 
 
 
