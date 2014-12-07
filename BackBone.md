@@ -266,7 +266,9 @@ BackBone.js
         }]
         var stus = new stulist(stumodels);
         console.log(stus.models)
-        
+    ```
+    ```javascript 
+
         //example2(实例化集合类)
         
         var mfPerson = Backbone.Model.extend({
@@ -287,17 +289,88 @@ BackBone.js
             total:21
         }]
 
+        //这里是实例化
         var stu = new Backbone.Collection(mfs,{
             model: mfPerson
         })
-
+    ```
 #### 自定义集合方法
-  和自定义数据模型方样一样类似的。现在看Collection更像是除里数据模型的集合
+  和自定义数据模型方样一样类似的。现在看Collection更像是除里数据模型的集合  
+
+#### 操作集合中模型对象  
+  
+  ```remove```从指定的集合对象中移除一个或多个模型对象
+  ```pop```移除集合中最后一个模型对象
+  ```shift```移除集合中首个模型对象
+
+  使用方法都很简单，不在练习，如果忘记再回来看  
+
+#### 添加集合对象中的模型
+    ```add```
+    ```push```
+    ```unshift```
+ 和操作集合是一样的，很类似于原生的javascript  
+
+ ```javascript 
+     var student = Backbone.Model.extend({
+            defaults : {
+                code:"",
+                name:"",
+                age:""
+            }
+        })
+        var stumodels = [{
+            code:"js",
+            name:"baozi",
+            age: 21
+        },{
+            code:"node",
+            name:"ppr",
+            age: 21
+        },{
+            code:"css3",
+            name:"pro",
+            age: 22
+        },{
+            code:"html5",
+            name:"alane",
+            age: 26
+        }]
+        var stus = new Backbone.Collection(stumodels,{
+            model: student
+        })
+        for(var i = 0;i < stus.models.length;i++) {
+            console.log(stus.models[i].toJSON())
+        }
+        console.log("===========================================")
+        stus.remove(stus.models[0]);
+        stus.pop()
+        stus.shift();
+        for(var i = 0;i < stus.models.length;i++) {
+            console.log(stus.models[i].toJSON())
+        }
+        console.log("===========================================")
+        stus.push({
+            name:"zhanglei",
+            code:"php",
+            age:30
+        })
+        stus.add({
+            name:"wangxia",
+            code:"java",
+            age:27
+        },{at:1})
+        for(var i = 0;i < stus.models.length;i++) {
+            console.log(stus.models[i].toJSON())
+        }
 
 
-        
+ ```
+ 
 
-   ```
+
+
+
 
 
 
