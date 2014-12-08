@@ -363,10 +363,19 @@ BackBone.js
         for(var i = 0;i < stus.models.length;i++) {
             console.log(stus.models[i].toJSON())
         }
-
+        var findId = stus.get(21);
+        console.log(stus.get(21).toJSON())
+        console.log(stus.at(2).toJSON())
+        console.log(stus.findWhere({
+            name:"baozi"
+        }).toJSON());
 
  ```
+ #### 与服务器交互集合中的模型对象
+ ```fetch ``` 获得数据用做初始化
+ ```create``` 创建好集合对象中的全部模型数据发送到服务器，数据同步,指定id则为修改服务器数据
  
+
 
 
 
