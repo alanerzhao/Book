@@ -373,9 +373,95 @@ BackBone.js
  ```
  #### 与服务器交互集合中的模型对象
  ```fetch ``` 获得数据用做初始化
- ```create``` 创建好集合对象中的全部模型数据发送到服务器，数据同步,指定id则为修改服务器数据
- 
+ ```create``` 创建好集合对象中的全部模型数据发送到服务器，数据同步,指定id则为修改服务器数据  
 
+### 视图
+  核心功能就是处理数据业务逻辑，绑定dom事件，渲染模型或集合类  
+
+#### 视图对象
+   与模型集合对象相类似，需要构建视图类，在构建时可以设置el属性关联dom中的元素  
+   不设置el,Backbone动态生成一个div元素
+
+   ```javascript 
+     //动态生成元素
+    var testView = Backbone.View.extend({
+        el:".viewInfo",
+        render: function (content) {
+            this.el.innerHTML = content;
+            document.body.appendChild(this.el);
+        }
+    })
+
+    var test = new testView();
+    test.render("backbone mvc");
+   ```
+#### 视图对象访问模型对象
+   接收集合对象返回的数据集，并将数据在页面中进行渲染。不直接访问数据模型  
+   能过设计model也可以直接访问,以```this.model```的方式来访问数据对象
+
+    ```javascript
+    var student = Backbone.Model.extend({
+            defaults: {
+                name:"zhaoshui",
+                age: 26,
+                sex: "man"
+            }
+        })
+        var stu = new student({
+            name:"baozi",
+            age: 27,
+            sex:"son"
+        })
+        var test = new testView({model:stu});
+        test.render();
+
+    ```
+#### 视图对象访问集合对象
+    和访问数据对象一样，只要在视图对象中设置```{collection:xxx}```  
+#### 视图中的模板
+    这里我觉得可以采用```handlebars```也可以用undesore里提供的模板方法  
+    
+    ```javascript
+        <div id="score"></div>
+    <script type="text/x-handlebars-template" id="viewTpl" charset="utf-8">
+        {{#if score}}
+            <p>优秀</p>
+        {{else}}
+            <p>及格</p>
+        {{/if}}
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        var _h = Handlebars;
+         var stuview = Backbone.View.extend({
+        el: $("#score"),
+        initialize: function () {
+            this.template = _h.compile($("#viewTpl").html());
+        },
+        render: function (pscore) {
+            this.$el.html(this.template({ score: pscore }));
+        }
+    });
+    //实例化一个view视图
+    var stuv = new stuview();
+    stuv.render(600)
+      /*  var stuView = Backbone.View.extend({
+             el: $("#score"),
+            //初始化就被call了
+            initilize: function () {
+                var source = $("#viewTpl").html();
+                this.template = _h.compile(source)
+            },
+            //实例对象的方法
+            render: function (pscore) {
+                 this.$el.html(this.template({ score: pscore }));
+            }
+        }) 
+        var stu = new stuView();
+            stu.render(600)*/
+    </script>
+    
+    ```
 
 
 
