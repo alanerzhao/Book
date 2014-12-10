@@ -380,9 +380,9 @@ BackBone.js
 
 #### 视图对象
    与模型集合对象相类似，需要构建视图类，在构建时可以设置el属性关联dom中的元素  
-   不设置el,Backbone动态生成一个div元素
+   不设置el,Backbone动态生成一个div元素  
+   ```javascript
 
-   ```javascript 
      //动态生成元素
     var testView = Backbone.View.extend({
         el:".viewInfo",
@@ -397,10 +397,9 @@ BackBone.js
    ```
 #### 视图对象访问模型对象
    接收集合对象返回的数据集，并将数据在页面中进行渲染。不直接访问数据模型  
-   能过设计model也可以直接访问,以```this.model```的方式来访问数据对象
-
+   能过设计model也可以直接访问,以```this.model```的方式来访问数据对象  
     ```javascript
-    var student = Backbone.Model.extend({
+        var student = Backbone.Model.extend({
             defaults: {
                 name:"zhaoshui",
                 age: 26,
@@ -414,53 +413,50 @@ BackBone.js
         })
         var test = new testView({model:stu});
         test.render();
-
     ```
 #### 视图对象访问集合对象
     和访问数据对象一样，只要在视图对象中设置```{collection:xxx}```  
 #### 视图中的模板
     这里我觉得可以采用```handlebars```也可以用undesore里提供的模板方法  
-    
     ```javascript
         <div id="score"></div>
-    <script type="text/x-handlebars-template" id="viewTpl" charset="utf-8">
-        {{#if score}}
-            <p>优秀</p>
-        {{else}}
-            <p>及格</p>
-        {{/if}}
-    </script>
+        <script type="text/x-handlebars-template" id="viewTpl" charset="utf-8">
+            {{#if score}}
+                <p>优秀</p>
+            {{else}}
+                <p>及格</p>
+            {{/if}}
+        </script>
 
-    <script type="text/javascript" charset="utf-8">
-        var _h = Handlebars;
-         var stuview = Backbone.View.extend({
-        el: $("#score"),
-        initialize: function () {
-            this.template = _h.compile($("#viewTpl").html());
-        },
-        render: function (pscore) {
-            this.$el.html(this.template({ score: pscore }));
-        }
-    });
-    //实例化一个view视图
-    var stuv = new stuview();
-    stuv.render(600)
-      /*  var stuView = Backbone.View.extend({
-             el: $("#score"),
-            //初始化就被call了
-            initilize: function () {
-                var source = $("#viewTpl").html();
-                this.template = _h.compile(source)
+        <script type="text/javascript" charset="utf-8">
+            var _h = Handlebars;
+             var stuview = Backbone.View.extend({
+            el: $("#score"),
+            initialize: function () {
+                this.template = _h.compile($("#viewTpl").html());
             },
-            //实例对象的方法
             render: function (pscore) {
-                 this.$el.html(this.template({ score: pscore }));
+                this.$el.html(this.template({ score: pscore }));
             }
-        }) 
-        var stu = new stuView();
-            stu.render(600)*/
-    </script>
-    
+        });
+        //实例化一个view视图
+        var stuv = new stuview();
+        stuv.render(600)
+          /*  var stuView = Backbone.View.extend({
+                 el: $("#score"),
+                //初始化就被call了
+                initilize: function () {
+                    var source = $("#viewTpl").html();
+                    this.template = _h.compile(source)
+                },
+                //实例对象的方法
+                render: function (pscore) {
+                     this.$el.html(this.template({ score: pscore }));
+                }
+            }) 
+            var stu = new stuView();
+                stu.render(600)*/
+        </script>
     ```
 
 
