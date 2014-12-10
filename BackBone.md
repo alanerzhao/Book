@@ -417,7 +417,7 @@ BackBone.js
 #### 视图对象访问集合对象
 和访问数据对象一样，只要在视图对象中设置```{collection:xxx}```  
 #### 视图中的模板
-这里我觉得可以采用```handlebars```也可以用undesore里提供的模板方法 
+这里我觉得可以采用```handlebars```也可以用```underscore```里提供的模板方法 
  ```html
     <div id="score"></div>
     <script type="text/x-handlebars-template" id="viewTpl" charset="utf-8">
@@ -431,18 +431,18 @@ BackBone.js
   
   ```javascript
      var _h = Handlebars;
-      var stuview = Backbone.View.extend({
-     el: $("#score"),
-     initialize: function () {
-         this.template = _h.compile($("#viewTpl").html());
-     },
-     render: function (pscore) {
-         this.$el.html(this.template({ score: pscore }));
-     }
- });
- //实例化一个view视图
- var stuv = new stuview();
- stuv.render(600)
+     var stuview = Backbone.View.extend({
+         el: $("#score"),
+         initialize: function () {
+             this.template = _h.compile($("#viewTpl").html());
+         },
+         render: function (pscore) {
+             this.$el.html(this.template({ score: pscore }));
+         }
+     });
+     //实例化一个view视图
+     var stuv = new stuview();
+     stuv.render(600)
  ```
 
 
