@@ -444,6 +444,30 @@ BackBone.js
      var stuv = new stuview();
      stuv.render(600)
  ```
+   ```javascript 
+   var view = Backbone.View.extend({
+            //设置对象如果不设置会创建一个div
+            el : "body",
+            initialize: function () {
+                this.render();
+            },
+            render: function () {
+                //A cached jQuery object for the view's element. A handy reference instead of re-wrapping the DOM element all the time
+                //缓存jQuery对象的视图的元素。方便引用，不用重新包装的DOM元素
+                //see http://jsperf.com/backbone-append-el-vs-append-el
+                this.$el.append('<div id="backbone"></div>')
+            },
+            events: {
+                'click #backbone': 'togcls'
+            },
+            togcls: function () {
+                $("#backbone").toggleClass("changed");
+            }
+        })
+        var viewMul = new view
+    ```
+#### 动态绑定和取消视图中的事件
+ 也就是类似于事件代理，Backbone 提供了两个方法```delegateEvents 和 undlegateEvents```  
 
 
 
