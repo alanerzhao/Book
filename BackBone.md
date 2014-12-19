@@ -469,8 +469,7 @@ BackBone.js
 #### 动态绑定和取消视图中的事件
  也就是类似于事件代理，Backbone 提供了两个方法```delegateEvents 和 undlegateEvents```  
 
-
-
+ 
 
 
 
