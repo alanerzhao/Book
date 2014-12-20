@@ -37,6 +37,8 @@
     :bn 和 :bp → 你可以同时打开很多文件，使用这两个命令来切换下一个或上一个文件。（陈皓注：我喜欢使用:n到下一个文件）
     ctrl + V  = → 自动给缩进 （陈皓注：这个功能相当强大，我太喜欢了）
 
+    :vimgrep /SearchItem/ **/*.scss grep文件
+
 #### vim正则匹配
 
     :%s/str1/str2/        用字符串 str2 替换行中首次出现的字符串 str1
@@ -101,4 +103,29 @@
    * command + css 颜色前的面板可以获得页面的颜色
    * alt + click 节点展开多级
 
+vimgrep /匹配模式/[g][j] 要搜索的文件/范围 
+g：表示是否把每一行的多个匹配结果都加入
+j：表示是否搜索完后定位到第一个匹配位置
+vimgrep /pattern/ %           在当前打开文件中查找
+vimgrep /pattern/ *             在当前目录下查找所有
+vimgrep /pattern/ **            在当前目录及子目录下查找所有
+vimgrep /pattern/ *.c          查找当前目录下所有.c文件
+vimgrep /pattern/ **/*         只查找子目录
+
+cn                                          查找下一个
+cp                                          查找上一个
+copen                                    打开quickfix
+cw                                          打开quickfix
+cclose                                   关闭qucikfix
+help vimgrep                       查看vimgrep帮助]]
+
+
+vimgrep
+http://blog.csdn.net/qilihechuncai/article/details/8587389
+
+" Amazing custom search command. Thansk to Ingo: http://stackoverflow.com/a/24818933/1147859
+"vommand -nargs=+ Se execute 'vimgrep /' . [<f-args>][0] . '/ **/*.' . [<f-args>][1]
+"vim -u ~/.vimrc.basic
+"还有一个值得知道的技巧，在 Vim 中键入 CTRL-Z 会将 Vim 临时挂起并返回其父进程（多数情况下就是 Terminal Shell），之后在终端里输入 fg 回车之后会回到 Vim。这个技巧有助于你快捷的往返于 Vim 和 终端之间。如果你不方便按 CTRL-Z（比如 Windows……），可以用命令 :st[op] 或 :sus[pend] 代替。
+"
 

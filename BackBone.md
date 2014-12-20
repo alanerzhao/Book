@@ -297,8 +297,7 @@ BackBone.js
 #### 自定义集合方法
   和自定义数据模型方样一样类似的。现在看Collection更像是除里数据模型的集合  
 
-#### 操作集合中模型对象  
-  
+#### 操作集合中模型对象
   ```remove```从指定的集合对象中移除一个或多个模型对象
   ```pop```移除集合中最后一个模型对象
   ```shift```移除集合中首个模型对象
@@ -371,16 +370,16 @@ BackBone.js
         }).toJSON());
 
  ```
- #### 与服务器交互集合中的模型对象
+#### 与服务器交互集合中的模型对象
  ```fetch ``` 获得数据用做初始化
  ```create``` 创建好集合对象中的全部模型数据发送到服务器，数据同步,指定id则为修改服务器数据  
 
 ### 视图
-  核心功能就是处理数据业务逻辑，绑定dom事件，渲染模型或集合类  
+  核心功能就是处理数据业务逻辑，绑定dom事件，渲染模型或集合类
 
 #### 视图对象
-   与模型集合对象相类似，需要构建视图类，在构建时可以设置el属性关联dom中的元素  
-   不设置el,Backbone动态生成一个div元素  
+与模型集合对象相类似，需要构建视图类，在构建时可以设置el属性关联dom中的元素  
+不设置el,Backbone动态生成一个div元素  
    ```javascript
 
      //动态生成元素
@@ -444,28 +443,29 @@ BackBone.js
      var stuv = new stuview();
      stuv.render(600)
  ```
-   ```javascript 
-   var view = Backbone.View.extend({
-            //设置对象如果不设置会创建一个div
-            el : "body",
-            initialize: function () {
-                this.render();
-            },
-            render: function () {
-                //A cached jQuery object for the view's element. A handy reference instead of re-wrapping the DOM element all the time
-                //缓存jQuery对象的视图的元素。方便引用，不用重新包装的DOM元素
-                //see http://jsperf.com/backbone-append-el-vs-append-el
-                this.$el.append('<div id="backbone"></div>')
-            },
-            events: {
-                'click #backbone': 'togcls'
-            },
-            togcls: function () {
-                $("#backbone").toggleClass("changed");
-            }
-        })
-        var viewMul = new view
-    ```
+```javascript 
+var view = Backbone.View.extend({
+        //设置对象如果不设置会创建一个div
+        el : "body",
+        initialize: function () {
+            this.render();
+        },
+        render: function () {
+            //A cached jQuery object for the view's element. A handy reference instead of re-wrapping the DOM element all the time
+            //缓存jQuery对象的视图的元素。方便引用，不用重新包装的DOM元素
+            //see http://jsperf.com/backbone-append-el-vs-append-el
+            this.$el.append('<div id="backbone"></div>')
+        },
+        events: {
+            'click #backbone': 'togcls'
+        },
+        togcls: function () {
+            $("#backbone").toggleClass("changed");
+        }
+    })
+    var viewMul = new view
+```
+
 #### 动态绑定和取消视图中的事件
  也就是类似于事件代理，Backbone 提供了两个方法```delegateEvents 和 undlegateEvents```  
 
