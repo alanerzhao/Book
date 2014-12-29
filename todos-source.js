@@ -14,7 +14,6 @@ $(function () {
         done: false
       };
     },
-
     // 设置任务完成状态
     toggle: function() {
         this.save({done: !this.get("done")});
@@ -30,8 +29,10 @@ $(function () {
 var TodoList = Backbone.Collection.extend ({//{{{
     //指定数据模型
     model : Todo,
+    idAttributes : "id",
     //拉取本地数据
-    localStorage : new Backbone.LocalStorage("todo-backbone"),
+    url : "http://localhost:3000/user/",
+    //localStorage : new Backbone.LocalStorage("todo-backbone"),
     done :  function () {
         //查找到完成的
         return this.where({done : true});
@@ -52,7 +53,6 @@ var TodoList = Backbone.Collection.extend ({//{{{
 
 //实例化集合对象
 var Todos = new TodoList;
-    //_h = Handlebars;
 
 /*****
  *
@@ -76,7 +76,9 @@ var TodoView = Backbone.View.extend({//{{{
     initialize : function () {
         //每个item监听todo模型
         this.listenTo(this.model,'change',this.render)
-        this.listenTo(this.model,'destroy',this.destroy)
+        //TODO remove
+        //this.remove是销毁html我草这里有点坑
+        this.listenTo(this.model,'destroy',this.removeItem)
     },
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
@@ -84,6 +86,9 @@ var TodoView = Backbone.View.extend({//{{{
         this.$el.toggleClass("done",this.model.get("done"));
         this.input = this.$(".edit");
         return this;
+    },
+    removeItem: function () {
+        this.remove()
     },
     toggleDone: function() {
         this.model.toggle();
@@ -104,6 +109,8 @@ var TodoView = Backbone.View.extend({//{{{
         if(!value) {
             //如果不存在则销毁
             this.clear()
+            //觉得还需要加这个呢
+            //this.remove()
         } else {
             //否则同步到服务器
             this.model.save({title: value})
@@ -119,7 +126,7 @@ var TodoView = Backbone.View.extend({//{{{
  * 主要通过view 绑定collection来操作远端的集合
  *
  *****/
-var AppView = Backbone.View.extend({
+var AppView = Backbone.View.extend({//{{{
 
     el : $("#todoapp"),
     statsTemplate :  _.template($("#stats-template").html()),
@@ -133,8 +140,12 @@ var AppView = Backbone.View.extend({
         this.input = this.$("#new-todo");
         this.allCheckbox = this.$("#toggle-all")[0];
 
+        //如果有数据则执行addOne
         this.listenTo(Todos,"add",this.addOne);
+        //只要请求成功就会调用reset事件，但必须手动指定事件对象函数
+        //这里是监听reset
         this.listenTo(Todos,"reset",this.addAll);
+        //只要有变动则执行this.render
         this.listenTo(Todos,"all",this.render);
 
         this.footer = this.$("footer");
@@ -172,6 +183,7 @@ var AppView = Backbone.View.extend({
         this.$("#todo-list").append(view.render().el);
     },
     addAll : function () {
+        //reset 执行到这里循环数据执行自峰的addOne
         //如果存在数据则执行每条添加记录
         Todos.each(this.addOne,this)
     },
@@ -200,7 +212,7 @@ var AppView = Backbone.View.extend({
         })
 
     }
-})
+})//}}}
 
 var App = new AppView;
 
