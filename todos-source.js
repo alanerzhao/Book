@@ -1,42 +1,71 @@
-var Todo = Backbone.Model.extend ({//{{{
+$(function () {
 
-    defaults : {
-        title : "empty todo",
-        order : todos.nextOrder()
-        done : false
+   /*****
+    *
+    * 建立基础数据模型
+    *
+    *****/
+   var Todo = Backbone.Model.extend({//{{{
+    // 设置默认的属性
+     defaults: function() {
+      return {
+        title: "empty todo...",
+        order: Todos.nextOrder(),
+        done: false
+      };
     },
 
-    toggle : function () {
-        //得到模型的完成状态
-        this.save({done : !this.get("done")})
+    // 设置任务完成状态
+    toggle: function() {
+        this.save({done: !this.get("done")});
     }
 })//}}}
 
+    /*****
+     *
+     * 集合控制器
+     * 对数据的整体操控做一些数据的操作
+     *
+     ******/
 var TodoList = Backbone.Collection.extend ({//{{{
-
+    //指定数据模型
     model : Todo,
+    //拉取本地数据
     localStorage : new Backbone.LocalStorage("todo-backbone"),
     done :  function () {
-        //TODO
+        //查找到完成的
         return this.where({done : true});
     },
     remaining : function () {
+        //查找到未完成的
         return this.where({done : false});
     },
     nextOrder : function () {
-        return this.last().get("order") + 1;
+        if (!this.length) return 1;
+      return this.last().get('order') + 1;
+
     },
     comparator : "order"
 
 })//}}}
 
-var Todos = new TodoList,
-    _h = Handlebars;
 
+//实例化集合对象
+var Todos = new TodoList;
+    //_h = Handlebars;
+
+/*****
+ *
+ * 定义item视图类
+ * 绑定了每个item的方法
+ * 主要处理的是对每个模型的控制和这个item的操作
+ *
+ *
+ *****/
 var TodoView = Backbone.View.extend({//{{{
     
     tagName : "li",
-    template : _h.compile($(".item-template").html()),
+    template :  _.template($('#item-template').html()),
     events : {
         "click .toggle" : "toggleDone",
         "dblclick .view" : "edit",
@@ -45,12 +74,13 @@ var TodoView = Backbone.View.extend({//{{{
         "blur .edit" : "close"
     },
     initialize : function () {
-        //监听模型
+        //每个item监听todo模型
         this.listenTo(this.model,'change',this.render)
         this.listenTo(this.model,'destroy',this.destroy)
     },
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
+        //新版toggleClass用法，true 加
         this.$el.toggleClass("done",this.model.get("done"));
         this.input = this.$(".edit");
         return this;
@@ -65,14 +95,17 @@ var TodoView = Backbone.View.extend({//{{{
     clear: function () {
         this.model.destroy();
     },
+    //编辑状态
     updateOnEnter : function (e) {
         if(e.keyCode == 13) this.close()
     },
     close : function () {
         var value = this.input.val();
         if(!value) {
+            //如果不存在则销毁
             this.clear()
         } else {
+            //否则同步到服务器
             this.model.save({title: value})
             this.$el.removeClass("editing")
         }
@@ -80,16 +113,23 @@ var TodoView = Backbone.View.extend({//{{{
 })
 //}}}
 
+/*****
+ *
+ * 应用类整体控制 
+ * 主要通过view 绑定collection来操作远端的集合
+ *
+ *****/
 var AppView = Backbone.View.extend({
 
     el : $("#todoapp"),
-    statsTemplate : _h.compile($("#stats-template").html()),
+    statsTemplate :  _.template($("#stats-template").html()),
     events : {
         "keypress #new-todo" : "createOnEnter",
         "click #clear-completed" : "clearCompleted",
         "click #toggle-all" : "toggleAllComplete"
     },
     initialize : function () {
+        //初始化所有操作
         this.input = this.$("#new-todo");
         this.allCheckbox = this.$("#toggle-all")[0];
 
@@ -106,7 +146,9 @@ var AppView = Backbone.View.extend({
     render : function () {
         var done = Todos.done().length;
         var remaining = Todos.remaining().length;
+        
 
+        //这里就是集合里如果有数据存在做一些处理
         if(Todos.length) {
             this.main.show();
             this.footer.show();
@@ -119,31 +161,26 @@ var AppView = Backbone.View.extend({
         this.allCheckbox.checked = !remaining
 
     },
-    addOne : function () {
+    //这里很重要，collection item view都走这里
+    addOne : function (todo) {
 
+        //指定了模型层
         var view = new  TodoView({
             model: todo
         })
-
+        //向列表中追加了数据
         this.$("#todo-list").append(view.render().el);
     },
     addAll : function () {
         //如果存在数据则执行每条添加记录
-        Todos.fetch(this.addOne,this)
+        Todos.each(this.addOne,this)
     },
-    newAttributes :  function () {
-        return  {
-            title : this.input.val(),
-            order : Todos.nextOrder,
-            done : false
-        }
-    
-    },
-    createOnEnter : function () {
+    createOnEnter : function (e) {
         
         if(e.keyCode  != 13) return;
         if(!this.input.val()) return;
         
+        //因为绑定在初始化的时候绑定了add方法所以会调用addone
         Todos.create({
             title:this.input.val()
         })
@@ -163,4 +200,8 @@ var AppView = Backbone.View.extend({
         })
 
     }
+})
+
+var App = new AppView;
+
 })
